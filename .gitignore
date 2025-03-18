@@ -1,0 +1,25 @@
+# Byte-compiled / cached files
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Virtual environment
+venv/
+env/
+
+# Django secret key & settings
+*.env
+config/settings.py
+
+# Logs and database
+logs/
+db.sqlite3
+
+# Static and media files
+static/
+media/
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp

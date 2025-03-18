@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deauth Attack</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #cewlResults {
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .alert-info {
+            background-color: white;
+            font-weight: bolder;
+        }
+        .navbar-brand {
+            width: 100%;
+            text-align: center;
+            font-size: 30px;
+        }
+        label {
+            color: #40cc45 !important;
+        }
+        #progressBar {
+            background: #3cd541;
+        }
+        button{
+            background-color: #3cd541 !important;
+            border: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="form-container">
+            <h1 class="form-header text-center" style="color: #3cd541;"><i class="bi bi-router "></i>Start Deauth Attack</h1>
+            <form id="mdk3Form">
+                <div class="mb-3">
+                    <label for="interface" class="form-label">Interface:</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-wifi"></i></span>
+                        <input type="text" class="form-control" id="interface" name="interface" placeholder="e.g., wlan0mon" value="wlan1mon" required>
+                    </div>
+                </div>
+                <div id="specific-attack-fields">
+                    <div class="mb-3">
+                        <label for="channel" class="form-label">Channel:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-hash"></i></span>
+                            <input type="number" class="form-control" id="channel" name="channel" placeholder="e.g., 6">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ap_mac" class="form-label">AP MAC:</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-router"></i></span>
+                            <input type="text" class="form-control" id="ap_mac" name="ap_mac" placeholder="e.g., 00:11:22:33:44:55">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="jamAll" name="jamAll">
+                    <label class="form-check-label" for="jamAll">Jam All Wi-Fi Networks</label>
+                </div>
+                <button type="submit" class="btn btn-danger w-100">Start Deauth Attack</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <script>
+        document.getElementById('mdk3Form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const interface = document.getElementById('interface').value;
+            const channel = document.getElementById('channel').value;
+            const ap_mac = document.getElementById('ap_mac').value;
+            const jamAll = document.getElementById('jamAll').checked;
+
+            let url = `/execute_mdk3?interface=${interface}`;
+
+            if (jamAll) {
+                url += `&jamAll=true`;
+            } else {
+                url += `&channel=${channel}&ap_mac=${ap_mac}`;
+            }
+
+            fetch(url)
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      showAlert('Deauth attack started successfully!', 'success');
+                      console.log(data.output);
+                  } else {
+                      showAlert('Error starting deauth attack: ' + data.error, 'danger');
+                  }
+              })
+              .catch(error => showAlert('Error: ' + error, 'danger'));
+        });
+
+        function showAlert(message, type) {
+            const alertPlaceholder = document.createElement('div');
+            alertPlaceholder.className = `alert alert-${type} mt-3`;
+            alertPlaceholder.textContent = message;
+            document.querySelector('.form-container').appendChild(alertPlaceholder);
+
+            setTimeout(() => alertPlaceholder.remove(), 5000); // Remove alert after 5 seconds
+        }
+    </script>
+</body>
+</html>

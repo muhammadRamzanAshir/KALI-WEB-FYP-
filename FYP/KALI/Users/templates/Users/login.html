@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Signup</title>
+    <!-- Load static files -->
+    {% load static %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<div class="container-fluid vh-100 d-flex align-items-center">
+    <div class="row w-100">
+        <div class="col-md-6 d-none d-md-block p-0">
+            <img id="side-image" src="{% static 'images/Login-pana.png' %}" alt="Side Image" width="80%" class="img-fluid h-100 ml-5">
+        </div>
+        <div class="col-md-6 d-flex align-items-center justify-content-center login-form">
+            <div id="login-form" class="glassmorphism p-4 w-100">
+                <h2 class="mb-4 mt-3 headings" style="text-align: center;">LOGIN</h2>
+                <form method="POST" action="{% url 'login' %}">
+                    {% if messages %}
+                    <div class="mb-4">
+                        {% for message in messages %}
+                            <div class="alert alert-success" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="login-username">Username</label>
+                        <input type="text" class="form-control" id="login-username" name="username" required>
+                    </div>
+                    <div class="form-group position-relative">
+                        <label for="login-password">Password</label>
+                        <input type="password" class="form-control" id="login-password" name="password" required>
+                        <i class="fa fa-eye position-absolute mt-2" style="right: 10px; top: 35px; cursor: pointer; color: rgb(7, 229, 29);" onclick="togglePasswordVisibility('login-password', this)"></i>
+                    </div>
+                    <div style="text-align: right;">
+                        <a href="" style="color: rgb(7, 229, 29);">Forget Password?</a>
+                    </div>
+                    <p>Don't have an account? <a href="{% url 'signup' %}" style="color: rgb(7, 229, 29);">Signup</a></p>
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="save-password">
+                        <label class="form-check-label" for="save-password">Save Password</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<a style="background-color: rgb(87, 228, 10); padding: 12px 12px; border-radius: 100%; text-align: center; position: absolute; right: 4%; top: 90%; box-shadow: 0 8px 32px 0 rgba(101, 101, 101, 0.37); color: aliceblue;" href="{% url 'index' %}"><i class="fa fa-home" aria-hidden="true"></i></a>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script>
+    function togglePasswordVisibility(id, icon) {
+        var input = document.getElementById(id);
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = "password";
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+</script>
+</body>
+</html>

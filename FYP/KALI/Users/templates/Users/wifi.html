@@ -1,0 +1,37 @@
+<!-- templates/Users/wifi.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time WiFi Data</title>
+</head>
+<body>
+    <table id="wifiTable">
+        <thead>
+            <tr>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        const socket = new WebSocket('ws://' + window.location.host + '/ws/wifi/');
+
+        socket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            const tableBody = document.getElementById('wifiTable').getElementsByTagName('tbody')[0];
+            const newRow = tableBody.insertRow();
+            const newCell = newRow.insertCell(0);
+            const newText = document.createTextNode(data.message);
+            newCell.appendChild(newText);
+        };
+
+        socket.onclose = function(e) {
+            console.error('WebSocket closed unexpectedly');
+        };
+    </script>
+</body>
+</html>

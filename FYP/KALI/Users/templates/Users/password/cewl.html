@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CeWL</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        #cewlResults {
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .alert-info {
+            background-color: white;
+            font-weight: bolder;
+        }
+        .navbar-brand { 
+            width: 100%;
+            text-align: center;
+            font-size: 30px;
+        }
+        label {
+            color: #40cc45;
+        }
+        #progressBar {
+            background: #3cd541;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="navbar-brand"><i class="bx bx-lock"></i> CeWL</h1>
+        <form id="cewlForm">
+            <div class="form-group">
+                <label for="url"><i class="bx bx-target-lock"></i> URL:</label>
+                <input type="text" id="url" class="form-control" placeholder="Enter target URL (e.g., https://example.com)" required>
+            </div>
+            <!-- <div class="form-group">
+                <label for="depth"><i class="bx bx-layer"></i> Depth:</label>
+                <input type="number" id="depth" class="form-control" placeholder="Enter crawl depth (e.g., 2)" required>
+            </div> -->
+            <div class="form-group">
+                <label for="minWordLength"><i class="bx bx-text"></i> Minimum Word Length:</label>
+                <input type="number" id="minWordLength" class="form-control" placeholder="Enter minimum word length (e.g., 3)" required>
+            </div>
+            <div class="form-group">
+                <label for="minWordLength"><i class="bx bx-text"></i> Max Word Length:</label>
+                <input type="number" id="maxWordLength" class="form-control" placeholder="Enter minimum word length (e.g., 3)" required>
+            </div>
+            <button type="button" id="generateBtn" class="btn btn-primary"><i class="bx bx-play-circle"></i> Generate Word List</button>
+        </form>
+        <div class="mt-3">
+            <div class="progress" style="display: none;" id="progressBarContainer">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" id="progressBar"></div>
+            </div>
+        </div>
+        <div class="mt-3">
+            <pre id="cewlResults" class="alert alert-info"><i class="bx bx-info-circle"></i> Word list will appear here</pre>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#generateBtn').click(function() {
+                const url = $('#url').val();
+                // const depth = $('#depth').val();
+                const minWordLength = $('#minWordLength').val();
+                const maxWordLength = $('#maxWordLength').val();
+
+                $('#progressBarContainer').show();
+                $('#progressBar').css('width', '0%');
+
+                // Simulate progress
+                let progress = 0;
+                const interval = setInterval(function() {
+                    progress += 10;
+                    $('#progressBar').css('width', progress + '%');
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                    }
+                }, 500);
+
+                $.ajax({
+                    url: '/run_cewl/',
+                    type: 'POST',
+                    data: {
+                        url: url,
+                        // depth: depth,
+                        minWordLength: minWordLength,
+                        maxWordLength: maxWordLength,
+                        // offsite: offsite,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        clearInterval(interval);
+                        $('#progressBarContainer').hide();
+                        if (response.data) {
+                            $('#cewlResults').html('<i class="bx bx-info-circle"></i> ' + response.data).removeClass().addClass('alert alert-info');
+                        } else {
+                            $('#cewlResults').html('<i class="bx bx-error-circle"></i> No data available').removeClass().addClass('alert alert-info');
+                        }
+                    },
+                    error: function(xhr, textStatus, error) {
+                        clearInterval(interval);
+                        $('#progressBarContainer').hide();
+                        console.log(xhr.statusText);
+                        $('#cewlResults').html('<i class="bx bx-error-circle"></i> Error: ' + xhr.statusText).removeClass().addClass('alert alert-danger');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

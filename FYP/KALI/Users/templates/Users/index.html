@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>KALI-WEB</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://unpkg.com/boxicons/css/boxicons.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.1/css/boxicons.min.css">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+<body id="home">
+    <!----================================== Navbar ===========================================-->
+    <nav class="navbar navbar-expand-lg navbar-light glassmorphism sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">KALI-WEB</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                    <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item ">
+                    <a class="nav-link" href="#Features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#Service">Services</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#About">About</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!----================================== Hero Section ===========================================-->
+    <section class="hero-section d-flex align-items-center">
+        <div class="container">
+        <div class="row">
+            <div class="col-md-6 mt-5">
+            <h1 class="navbar-brand" style="font-size: 40px;">KALI-WEB</h1>
+            <p>Kali Web is an innovative platform designed to ignite students' interest in cybersecurity by providing hands-on experience and practical knowledge. In the dynamic field of cybersecurity, practical skills are essential. Many students struggle to get started due to the complexity of command-line tools and the steep learning curve associated with traditional methods.</p>
+            <a  href="{% url 'login' %}" style="padding: 10px 40px;"class="btn btn-primary">LOGIN</a>
+        </div>
+            <div class="col-md-6 mb-5">
+                <img src="{% static 'images/Landingbg.png' %}" alt="My Image" width="100%" >
+            <!-- <img src="{% static 'Ecomrance/media/Landingbg.png' %}" alt="Hero Image" > -->
+            </div>
+        </div>
+        </div>
+    </section>
+    <!----================================== Feature Section ===========================================-->
+    <section class="feature-section py-5" id="Features">
+        <div class="container">
+        <h2 class="text-center mb-5 headings">FEATURES</h2>
+        <div class="row">
+            <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                <i class="bx bxs-shield bx-lg headings"></i>
+                <h5 class="card-title">Advanced Security Tools</h5>
+                <p class="card-text">We provide cutting-edge security tools designed to tackle modern cyber threats and vulnerabilities.</p>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                <i class="bx bx-user bx-lg headings"></i>
+                <h5 class="card-title">User-Friendly Interface</h5>
+                <p class="card-text">Our platform features an intuitive interface that simplifies complex security tasks for users at all levels.</p>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center ">
+                <i class="bx bxs-graduation bx-lg headings"></i>
+                <h5 class="card-title">Comprehensive Training</h5>
+                <p class="card-text">We offer extensive training resources to help users get the most out of our tools and enhance their cybersecurity skills.</p>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center ">
+                <i class="bx bx-cog bx-lg headings "></i>
+                <h5 class="card-title">Customizable Solutions</h5>
+                <p class="card-text">Our tools can be customized to meet the specific needs of different organizations, ensuring a perfect fit for all users.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!----================================== Service Section ===========================================-->
+    <section class="service-section py-5" id="Service">
+        <div class="container">
+        <h2 class="text-center mb-5 ">SERVICES</h2>
+        <div class="row">
+            <div class="col-md-6 mt-5  pt-5" style="font-size: 20px;">
+            <p>Kali Web is an innovative platform designed to ignite students' interest in cybersecurity by providing hands-on experience and practical knowledge. In the dynamic field of cybersecurity, practical skills are essential. Many students struggle to get started due to the complexity of command-line tools and the steep learning curve associated with traditional methods.</p>
+            </div>
+            <div class="col-md-6">
+            <img src="{% static 'images/service.png' %}" width="70%" alt="Service Image" class="img-fluid">
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!----================================== about Section ===========================================-->
+    <section class="about-section py-5" id="About">
+        <div class="container">
+        <h2 class="text-center mb-5 headings">ABOUT US</h2>
+        <div class="row">
+            <div class="col-md-6">
+            <div class="card text-center">
+                <img src="{% static 'images/team1.png' %}" class="rounded-circle mx-auto d-block mt-3" alt="Team Member 2" style="width: 150px;">
+                <div class="card-body">
+                <h5 class="card-title">Muhammad Ramzan Ashir</h5>
+                <p class="card-text">Lead Developer Currently working on cybersecurity and web and developing the new security tools </p>
+                <div class="social-icons">
+                <a href="#"><i class="bx bxl-facebook bx-md"></i></a>
+                <a href="#"><i class="bx bxl-twitter bx-md"></i></a>
+                <a href="#"><i class="bx bxl-linkedin bx-md"></i></a>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="card text-center">
+                <img src="{% static 'images/team2.png' %}" class="rounded-circle mx-auto d-block mt-3" alt="Team Member 2" style="width: 150px;">
+                <div class="card-body">
+                <h5 class="card-title">Hafeez Sheikh</h5>
+                <p class="card-text">Lead Developer Currently working on cybersecurity and web and developing the new security tools</p>
+                <div class="social-icons">
+                <a href="#"><i class="bx bxl-facebook bx-md"></i></a>
+                <a href="#"><i class="bx bxl-twitter bx-md"></i></a>
+                <a href="#"><i class="bx bxl-linkedin bx-md"></i></a>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!----================================== footer Section ===========================================-->
+    <footer class="py-5">
+        <div class="container text-center">
+        <p>ABOUT KALI-WEB</p>
+        <input type="text" class="form-control d-inline-block w-50" placeholder="Search...">
+        <button class="btn btn-primary">Search</button>
+            <div class="social-icons mt-3">
+                <a href="#"><i class="bx bxl-facebook bx-md"></i></a>
+                <a href="#"><i class="bx bxl-twitter bx-md"></i></a>
+                <a href="#"><i class="bx bxl-linkedin bx-md"></i></a>
+            </div>
+            <footer class="text-white text-center py-3">
+                <p>&copy; 2024 KALI-WEB</p>
+            </footer>        
+        </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

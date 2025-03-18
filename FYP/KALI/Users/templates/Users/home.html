@@ -1,0 +1,409 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css">
+
+    <style>
+        svg {
+            position: absolute;
+            z-index: -1;
+            padding: 0;
+            margin: 0;
+            left: 0;
+            bottom: 0;
+        }
+        canvas {
+            max-width: 600px;
+            margin: auto;
+        }
+        .card {
+            border: none;
+        }
+        #navbar {
+            padding-left: 20px;
+        }
+        .green {
+            color: #4ab74e;
+        }
+        .nav__link:hover {
+            text-decoration: none;
+        }
+    </style>
+
+    <title>KALI-WEB HOME</title>
+</head>
+<body style="background-color: #ffffff;">
+    <!--========== HEADER ==========-->
+    <div class="header__toggle">
+        <i class='bx bx-menu' id="header-toggle"></i>
+    </div>
+
+    <!--========== NAV ==========-->
+    <div class="nav glassmorphism" id="navbar">
+        <nav class="nav__container">
+            <div>
+                <a href="#" class="nav__link nav__logo">
+                    <span class="nav__logo-name headings">KALI WEB</span>
+                </a>
+                <div class="nav__list">
+                    <div class="nav__items">
+                        <h3 class="nav__subtitle">Profile</h3>
+                        <a href="#" class="nav__link active">
+                            <i class='bx bx-home nav__icon'></i>
+                            <span class="nav__name">Home</span>
+                        </a>
+                        <div class="nav__dropdown">
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-user nav__icon'></i>
+                                <span class="nav__name">{{ user.username }}</span>
+                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="nav__items">
+                        <h3 class="nav__subtitle">Menu</h3>
+                        <div class="nav__dropdown">
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-world'></i>
+                                <span class="nav__name">&nbsp;INFORMATION</span>
+                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                            </a>
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content">
+                                    <a href="{% url 'nmap' %}" class="nav__dropdown-item"><i class='bx bx-world'></i> NMAP</a>
+                                    <a href="{% url 'dimitry' %}" class="nav__dropdown-item"><i class="bx bxl-wordpress"></i> DIMITRY</a>
+                                    <a href="{% url 'whois' %}" class="nav__dropdown-item"><i class="bx bx-bug"></i> WHOIS</a>
+                                    <a href="{% url 'theharvester' %}" class="nav__dropdown-item"><i class="bx bx-folder"></i> HARVESTER</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nav__dropdown">
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-shield'></i>
+                                <span class="nav__name">&nbsp;VULNERABILITY</span>
+                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                            </a>
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content">
+                                    <a href="{% url 'nikto' %}" class="nav__dropdown-item"><i class="bx bx-bug"></i> NIKTO</a>
+                                    <a href="{% url 'wpscan' %}" class="nav__dropdown-item"><i class="bx bxl-wordpress"></i> WPSCAN</a>
+                                    <a href="{% url 'sqlmap' %}" class="nav__dropdown-item"><i class="bx bx-bug"></i> SQLMAP</a>
+                                    <a href="{% url 'joomscan' %}" class="nav__dropdown-item"><i class="bx bx-shield-alt"></i> JOOMSCAN</a>
+                                    <a href="{% url 'dirsearch' %}" class="nav__dropdown-item"><i class="bx bx-folder"></i> DIRSEARCH</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nav__dropdown">
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-network-chart'></i>
+                                <span class="nav__name">&nbsp;WEB APPLICATION</span>
+                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                            </a>
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content">
+                                    <a href="{% url 'nikto' %}" class="nav__dropdown-item"><i class="bx bx-bug"></i> NIKTO</a>
+                                    <a href="{% url 'dirsearch' %}" class="nav__dropdown-item"><i class="bx bx-folder"></i> DIRSEARCH</a>
+                                    <a href="{% url 'nuclei' %}" class="nav__dropdown-item"><i class="bx bx bx-target-lock"></i> NUCLEI</a>
+                                    <a href="{% url 'cmsmap' %}" class="nav__dropdown-item"><i class="bx bx-globe-alt"></i> CMSMAP</a>
+                                    <a href="{% url 'view_whatweb' %}" class="nav__dropdown-item"><i class='bx bx-globe'></i> WHATWEB</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nav__dropdown">
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-lock'></i>
+                                <span class="nav__name">&nbsp;PASSWORDS</span>
+                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                            </a>
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content">
+                                    <a href="{% url 'john' %}" class="nav__dropdown-item"><i class="bx bx-lock-alt"></i> JOHN</a>
+                                    <a href="{% url 'hydra' %}" class="nav__dropdown-item"><i class="bx bx-key"></i> HYDRA</a>
+                                    <a href="{% url 'crunch' %}" class="nav__dropdown-item"><i class="bx bx-hide"></i> CRUNCH</a>
+                                    <a href="{% url 'cewl' %}" class="nav__dropdown-item"><i class="bx bx-show"></i> CEWL</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nav__dropdown">
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-wrench'></i>
+                                <span class="nav__name">&nbsp;EXPLOITATION</span>
+                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                            </a>
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content">
+                                    <a href="{% url 'sqlmap' %}" class="nav__dropdown-item"><i class="bx bx-folder"></i> SQLMAP</a>
+                                    <a href="{% url 'dirsearch' %}" class="nav__dropdown-item"><i class="bx bx-folder"></i> SEARCH</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nav__dropdown">
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-cog'></i>
+                                <span class="nav__name">&nbsp;SNIFFING SPOFF</span>
+                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                            </a>
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content">
+                                    <a href="{% url 'macof' %}" class="nav__dropdown-item"><i class="bx bx-network-chart"></i> MACOF</a>
+                                    <a href="{% url 'mdk3' %}" class="nav__dropdown-item"><i class="bx bx-data"></i> MDK-3</a>
+                                    <a href="{% url 'netdiscover' %}" class="nav__dropdown-item"><i class="bx bx-server"></i> NetDiscover</a>
+                                    <a href="{% url 'geolocation_tool' %}" class="nav__dropdown-item"><i class="bx bx-cog"></i> Ip-Information</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nav__dropdown">
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-wifi'></i>
+                                <span class="nav__name">&nbsp;OSINT </span>
+                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                            </a>
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content">
+                                    <a href="{% url 'infoga' %}" class="nav__dropdown-item"><i class="bx bx-user-check"></i>Infoga</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nav__dropdown">
+                            <a href="#" class="nav__link">
+                                <i class='bx bx-command'></i>
+                                <span class="nav__name">&nbsp;MISCELLENIOUSE </span>
+                                <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
+                            </a>
+                            <div class="nav__dropdown-collapse">
+                                <div class="nav__dropdown-content">
+                                    <a href="{% url 'netdiscover' %}" class="nav__dropdown-item"><i class="bx bx-map"></i>ARP-SCAN</a>
+                                    <a href="{% url 'macof' %}" class="nav__dropdown-item"><i class="bx bx-folder-open"></i>Macof</a>
+                                    <a href="{% url 'tgpt' %}" class="nav__dropdown-item"><i class="bx bx-analyse"></i>tgpt</a>
+                                    <a href='http://localhost:801/' class="nav__dropdown-item"><i class="bx bx-globe"></i>Reverse</a>
+                                    <a href="{% url 'macof' %}" class="nav__dropdown-item"><i class="bx bx-cctv"></i>PROXYCHANINS</a>
+                                    <a href="{% url 'mdk3' %}" class="nav__dropdown-item"><i class="bx bx-bug"></i>Mdk3</a>
+                                    <a href="{% url 'macof' %}" class="nav__dropdown-item"><i class="bx bx-bug"></i>TOR</a>
+                                    <a href="{% url 'zip2john' %}" class="nav__dropdown-item"><i class="bx bx-bug"></i>zip2john</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="{% url 'logout' %}" class="nav__link nav__logout">
+                <i class='bx bx-log-out nav__icon'></i>
+                <span class="nav__name">Log Out</span>
+            </a>
+        </nav>
+    </div>
+    <div class="row mb-4">
+        <!-- Services Start/Stop Table -->
+        <div class="col-lg-12 glassmorphism">
+            <table class="table">
+                <div id="response-message" style="margin-top: 10px; color: green;"></div>
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Service Apache-2</td>
+                        <td>
+                            <button class="btn btn-success" onclick="manageService('apache2', 'start')">Start</button>
+                            <button class="btn btn-danger" onclick="manageService('apache2', 'stop')">Stop</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Service Tor</td>
+                        <td>
+                            <button class="btn btn-success" onclick="manageService('tor', 'start')">Start</button>
+                            <button class="btn btn-danger" onclick="manageService('tor', 'stop')">Stop</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Service Bluetooth</td>
+                        <td>
+                            <button class="btn btn-success" onclick="manageService('bluetooth', 'start')">Start</button>
+                            <button class="btn btn-danger" onclick="manageService('bluetooth', 'stop')">Stop</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+        <div class="row justify-content-between ">
+            
+            <!-- Network Information Table -->
+            <div class="col-md-6 card">
+                <table class="table">
+                    <thead>
+                        <tr><th colspan="3" class="headings text-center">Network Information</th></tr>
+                    </thead>
+                    <thead class="thead-dark">
+                        <tr><th>Hostname</th><th>IP</th><th>MAC</th></tr>
+                    </thead>
+                    {% if error %}
+                    <tbody><tr><td colspan="3" style="color: red;">{{ error }}</td></tr></tbody>
+                    {% else %}
+                    <tbody>
+                        <tr>
+                            <td class="headings">{{ hostname }}</td>
+                            <td>{{ ip }}</td>
+                            <td>{{ mac }}</td>
+                        </tr>
+                        <tr>
+                            <td class="headings">{{ router_host }}</td>
+                            <td>{{ gateway_ip }}</td>
+                            <td>{{ router_mac }}</td>
+                        </tr>
+                        <tr>
+                            <td class="headings">{{ ethernet_name }}</td>
+                            <td>{{ ethernet_ip }}</td>
+                            <td>{{ ethernet_mac }}</td>
+                        </tr>
+                        <tr>
+                            <td class="headings">{{ global_name }}</td>
+                            <td colspan="2" class="text-center">{{ global_ip }}</td>
+                        </tr>
+                    </tbody>
+                    {% endif %}
+                </table>
+            </div> 
+
+            <!-- Network Speed Test -->
+            <div class="col-md-4">
+                <h1 class="text-center headings">Network Speed Test</h1>
+                <canvas id="speedChart" width="800" height="400"></canvas>
+                {% if error %}
+                    <p style="color:red;">{{ error }}</p>
+                {% endif %}
+            </div> 
+        </div>
+    </div>
+    <!-- Wave SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#4ab74e" fill-opacity="1" d="M0,32L120,74.7C240,117,480,203,720,202.7C960,203,1200,117,1320,74.7L1440,32L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path>
+    </svg>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        const ctx = document.getElementById('speedChart').getContext('2d');
+    
+        // Initial data points
+        const downloadSpeed = parseFloat("{{ download|slice:':-5' }}"); // Simulated initial value
+        const uploadSpeed = parseFloat("{{ upload|slice:':-5' }}"); // Simulated initial value
+    
+        const speedChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [], // Will be filled with time values
+                datasets: [{
+                    label: 'Download Speed (Mbit/s)',
+                    data: [],
+                    borderColor: 'red',
+                    fill: false,
+                    tension: 0.1
+                }, {
+                    label: 'Upload Speed (Mbit/s)',
+                    data: [],
+                    borderColor: 'green',
+                    fill: false,
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Speed (Mbit/s)'
+                        }
+                    },
+                    x: {
+                        display: false // Hide the x-axis
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                }
+            }
+        });
+    
+        // Function to update the chart
+        function updateChart() {
+            const currentTime = new Date();
+            const seconds = Math.floor(currentTime.getTime() / 1000); // Get current time in seconds
+            
+            // Simulate fetching new data (replace with actual data fetching logic)
+            const newDownloadSpeed = Math.random() * 100; // Simulated download speed
+            const newUploadSpeed = Math.random() * 50; // Simulated upload speed
+            
+            // Add new data to the chart
+            if (speedChart.data.labels.length >= 20) { // Limit to 20 data points for display
+                speedChart.data.labels.shift(); // Remove the oldest label
+                speedChart.data.datasets[0].data.shift(); // Remove the oldest download speed
+                speedChart.data.datasets[1].data.shift(); // Remove the oldest upload speed
+            }
+            
+            // Add new data points
+            speedChart.data.labels.push(seconds);
+            speedChart.data.datasets[0].data.push(newDownloadSpeed);
+            speedChart.data.datasets[1].data.push(newUploadSpeed);
+            
+            speedChart.update(); // Update the chart
+        }
+    
+        // Update the chart every second
+        setInterval(updateChart, 500);
+
+        // Function to fetch packet data and update the column
+
+        function manageService(serviceName, action) {
+            const csrftoken = '{{ csrf_token }}'; // Ensure this is correctly rendered in your template.
+    
+            fetch('/manage-service/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify({
+                    service_name: serviceName,
+                    action: action
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const responseDiv = document.getElementById('response-message');
+                if (data.status === 'success') {
+                    responseDiv.style.color = 'green';
+                } else {
+                    responseDiv.style.color = 'red';
+                }
+                responseDiv.innerText = data.message;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const responseDiv = document.getElementById('response-message');
+                responseDiv.style.color = 'red';
+                responseDiv.innerText = 'Something went wrong.';
+            });
+        }
+    </script>
+</body>
+</html>

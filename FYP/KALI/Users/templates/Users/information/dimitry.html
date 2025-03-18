@@ -1,0 +1,306 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DMITRY | DEEP MAGIC</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-WwPAdFFnT9FvTPbkG/HTPT97jAcTY84f7QszA1XvCRZLOq4yyI8q46W4/8T+mCq+Cl8ekJbMhY5GDBJfUJ47wA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <style>
+        #scanResults {
+            white-space: pre-wrap; /* Preserve whitespace but allow wrapping */
+            max-height: 400px; /* Set a max height for the container */
+            overflow-y: auto; /* Add vertical scroll bar if content exceeds max height */
+        }
+        .alert-info {
+            background-color: white;
+            font-weight: bolder;
+        }
+        .navbar-brand {
+            width: 100%;
+            text-align: center;
+            font-size: 30px;
+        }
+        label {
+            color: #40cc45;
+        }
+        #progressBar{
+            background: #3cd541;
+        }
+        .card-body{
+            box-shadow: none !important;
+        }
+    </style>
+</head>
+<html>
+<body>
+    
+    <div class="container mt-5">
+        <div  class='mt-3' id="error"></div>
+        <h1 class="navbar-brand"><i class="bx bx-network-chart"></i> DIMITRY</h1>
+        <div class="form-group" id="urlForm">
+            <label for="urlInput"><i class="bx bx-link"></i> Enter URL:</label>
+            <input type="text" id="urlInput" class="form-control" placeholder="e.g. http://example.com ">
+        </div>
+        <button id="scanBtn" class="btn btn-primary"><i class="bx bx-search-alt-2"></i> Scan URL</button>
+        <br>
+        <br>
+        <div class="mt-3">
+            <div class="progress" style="display: none;" id="progressBarContainer">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" id="progressBar"></div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs profile-tab" role="tablist">
+                        <li class="nav-item"> <a class="nav-link active show" data-toggle="tab" href="#result" role="tab" aria-selected="true">Results</a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab" aria-selected="false">Settings</a> </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active show" id="result" role="tabpanel">
+                            <div class="card-body">
+                                <div class="profiletimeline">
+                                    <div class="sl-item">
+                                        <div class="sl-right">
+                                            <div>
+                                                <div class="container-fluid">
+                                                    <div class="mt-3">
+                                                        <pre id="scanResults" class="alert alert-info"><i class="bx bx-info-circle"></i> Scan results will appear here</pre>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                        <!--second tab-->
+                        <div class="tab-pane" id="settings" role="tabpanel">
+                            <div class="card-body">
+                                <div class="row pl-3 pt-2">
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="whois">
+                                            <label class="form-check-label" for="whois">
+                                                <i class='bx bx-world'></i> WHOIS Lookup
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="subdomains">
+                                            <label class="form-check-label" for="subdomains">
+                                                <i class='bx bx-network-chart'></i> Find Subdomains
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="emails">
+                                            <label class="form-check-label" for="emails">
+                                                <i class='bx bx-envelope'></i> Find Emails
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="ports">
+                                            <label class="form-check-label" for="ports">
+                                                <i class='bx bx-terminal'></i> Open Ports
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="traceroute">
+                                            <label class="form-check-label" for="traceroute">
+                                                <i class='bx bx-radar'></i> Traceroute
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<a style="background-color: rgb(87, 228, 10); padding: 12px 12px; border-radius: 100%; text-align: center; position: absolute; right: 4%; top: 90%; box-shadow: 0 8px 32px 0 rgba(101, 101, 101, 0.37); color: aliceblue;" href="{% url 'home' %}"><i class="bx bx-home" aria-hidden="true"></i></a>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+<script>
+        $(document).ready(function() {
+            $('#basicScan').change(function(){
+                var mode = $(this).val()
+                if(mode == "single"){
+                    $(".modeSelect").prop("disabled",true)
+                }
+                else{
+                    $(".modeSelect").prop("disabled",false)
+                }
+            });
+            $('#scanBtn').click(function() {
+                const url               = $('#urlInput').val();
+                const whois             = $('#whois').is(':checked')    ? '1':'0';
+                const subdomains        = $('#subdomains').is(':checked')    ? '1':'0';
+                const emails            = $('#emails').is(':checked')    ? '1':'0';
+                const ports             = $('#ports').is(':checked')    ? '1':'0';
+                const traceroute        = $('#whois').is(':checked')    ? '1':'0';
+                $('#progressBarContainer').show();
+                $('#progressBar').css('width', '0%');
+
+                // Simulate progress
+                let progress = 0;
+                const interval = setInterval(function() {
+                    progress += 10;
+                    $('#progressBar').css('width', progress + '%');
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                    }
+                }, 5000);
+
+                $.ajax({
+                    url: '/run_dimitry/',
+                    type: 'POST',
+                    data: {
+                        url             : url,
+                        whois           : whois,
+                        subdomains      : subdomains,
+                        emails          : emails,
+                        ports           : ports,
+                        traceroute      : traceroute,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        clearInterval(interval);
+                        $('#progressBarContainer').hide();
+                        if (response.data) {
+                            $('#scanResults').html('<i class="bx bx-info-circle"></i> ' + formatResults(response.data)).removeClass().addClass('alert alert-info');
+                        } else {
+                            $('#scanResults').html('<i class="bx bx-error-circle"></i> No data available').removeClass().addClass('alert alert-info');
+                        }
+                    },
+                    error: function(xhr, textStatus, error) {
+                        clearInterval(interval);
+                        $('#progressBarContainer').hide();
+                        console.log(xhr.statusText);
+                        $('#scanResults').html('<i class="bx bx-error-circle"></i> Error: ' + xhr.statusText).removeClass().addClass('alert alert-danger');
+                    }
+                });
+            });
+
+            function formatResults(data) {
+                return data.replace(/\[(.*?)\]/g, function(match, p1) {
+                    switch (p1.trim()) {
+                        case 'YouTube':
+                            return "  <i class='bx bxl-youtube youtube-icon'></i> YouTube"
+                        case 'GoAhead-Webs':
+                            return '<i class="bx bx-server" style="color:red; "></i> GoAhead-Webs';
+                        case 'HttpOnly':
+                            return '  <i class="bx bx-lock" style="color:#ff6347"></i> HttpOnly';
+                        case 'X-UA-Compatible':
+                            return "<i class='bx bx-cog compatibility-icon'></i> X-UA-Compatible"
+                        case 'X-XSS-Protection':
+                            return "  <i class='bx bx-shield security-icon'></i> X-XSS-Protection";
+                        case 'Strict-Transport-Security':
+                            return "<i class='bx bx-shield' style='color: #1a73e8; font-size: 24px;'></i> Strict-Transport-Security";
+                        case 'Cookies':
+                            return '  <i class="bx bx-cookie" style="color:#ff6347;"></i> Cookies';
+                        case 'Bootstrap':
+                            return '<i class="bx bxl-bootstrap" style="color:purple; "></i> Bootstrap';
+                        case 'HTML5':
+                            return '<i class="bx bxl-html5" style="color:orange; "></i> HTML5';
+                        case 'HTTPServer':
+                            return '<i class="bx bx-server" style="color:red; "></i> HTTPServer';
+                        case 'JQuery':
+                            return '<i class="bx bxl-jquery" style="color:blue; "></i> JQuery';
+                        case 'Script':
+                            return '<i class="bx bx-code-block" style="color:skyblue; "></i> Script';
+                        case 'UncommonHeaders':
+                            return '<i class="bx bx-header" style="color:green; "></i> UncommonHeaders';
+                        case 'X-Frame-Options':
+                            return '<i class="bx bx-frame" ></i> X-Frame-Options';
+                        case 'PHP':
+                            return '<i class="bx bxl-php" style="font-size:20px" ></i> PHP';
+                        case 'PasswordField':
+                            return '<i class="bx bx-shield-alt" style="font-size:20px" ></i> PasswordField';
+                        case 'X-Powered-By':
+                            return '<i class="bx bxs-chip" style="font-size:20px" ></i>  X-Powered-By';
+                        case 'Apache':
+                            return '<i class="fab fa-apache"></i> Apache';
+                        case 'Nginx':
+                            return '<i class="fab fa-nginx"></i> Nginx';
+                        case 'nginx':
+                            return '<i class="fab fa-nginx"></i> Nginx';
+                        case 'Microsoft IIS':
+                            return '<i class="fab fa-windows"></i> Microsoft IIS';
+                        case 'LiteSpeed':
+                            return '<i class="fas fa-rocket"></i> LiteSpeed';
+                        case 'WordPress':
+                            return '<i class="fab fa-wordpress"></i> WordPress';
+                        case 'Joomla':
+                            return '<i class="fab fa-joomla"></i> Joomla';
+                        case 'Drupal':
+                            return '<i class="fab fa-drupal"></i> Drupal';
+                        case 'Magento':
+                            return '<i class="fab fa-magento"></i> Magento';
+                        case 'PHP':
+                            return '<i class="fab fa-php"></i> PHP';
+                        case 'Python':
+                            return '<i class="fab fa-python"></i> Python';
+                        case 'Ruby':
+                            return '<i class="fas fa-gem"></i> Ruby';
+                        case 'Java':
+                            return '<i class="fab fa-java"></i> Java';
+                        case 'Angular':
+                            return '<i class="fab fa-angular"></i> Angular';
+                        case 'React':
+                            return '<i class="fab fa-react"></i> React';
+                        case 'Vue.js':
+                            return '<i class="fab fa-vuejs"></i> Vue.js';
+                        case 'MySQL':
+                            return '<i class="fas fa-database"></i> MySQL';
+                        case 'PostgreSQL':
+                            return '<i class="fas fa-database"></i> PostgreSQL';
+                        case 'MongoDB':
+                            return '<i class="fas fa-leaf"></i> PostgreSQL';
+                        case 'Google-Analytics':
+                            return '<i class="fas fa-chart-bar"></i> Google-Analytics';
+                        case 'Piwik':
+                            return '<i class="fas fa-chart-line"></i> Piwik';
+                        case 'Shopify':
+                            return '<i class="fas fa-shopping-cart"></i> Shopify';
+                        case 'WooCommerce':
+                            return '<i class="fas fa-shopping-cart"></i> WooCommerce';
+                        case 'SSL/TLS':
+                            return '<i class="fas fa-lock"></i> SSL/TLS';
+                        case 'Cloudflare':
+                            return '<i class="fab fa-cloudflare"></i> Cloudflare';
+                        case 'Docker':
+                            return '<i class="fab fa-docker"></i> Docker';
+                        case 'Kubernates':
+                            return '<i class="fab fa-kubernetes"></i> Kubernetes';
+                        case 'Redis':
+                            return '<i class="fas fa-memory"></i> Redis';
+                        default:
+                            return match;
+                    }
+                });
+            }
+        });
+    </script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        
+    </body>
+</html>
+

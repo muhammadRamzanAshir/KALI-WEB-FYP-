@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydra Password Cracker</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-WwPAdFFnT9FvTPbkG/HTPT97jAcTY84f7QszA1XvCRZLOq4yyI8q46W4/8T+mCq+Cl8ekJbMhY5GDBJfUJ47wA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .navbar-brand {
+            font-size: 30px;
+            font-weight: bold;
+            color: #3cd541;
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+        .icon {
+            font-size: 50px;
+            color: #3cd541;
+        }
+        .alert-info {
+            background-color: #e7f3e7;
+            color: #3cd541;
+            font-weight: bolder;
+        }
+        #cewlResults {
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .alert-info {
+            background-color: white;
+            font-weight: bolder;
+        }
+        .navbar-brand {
+            width: 100%;
+            text-align: center;
+            font-size: 30px;
+        }
+        label {
+            color: #40cc45;
+        }
+        #progressBar {
+            background: #3cd541;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar ">
+        <div class="container-fluid">
+            <a class="navbar-brand " href="#"><i class="bx bx-lock"></i> HYDRA | PASSWORD CRACKER</a>
+        </div>
+    </nav>
+
+    <div class="container form-container">
+        <!-- Display success or error message -->
+        <div id="result" class="alert alert-success text-center d-none">
+            <h4>Cracked Password</h4>
+            <p id="password"></p>
+        </div>
+        <div id="errorMessage" class="alert alert-danger text-center d-none"></div>
+        
+        <!-- Form to configure Hydra -->
+        <form id="hydraForm">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="target" class="form-label">Target IP/Domain</label>
+                <input type="text" class="form-control" id="target" name="target" placeholder="Enter target IP or domain" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="port" class="form-label">Target Port</label>
+                <input type="number" class="form-control" id="port" name="port" value="80" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="method" class="form-label">Attack Method</label>
+                <select class="form-select" id="method" name="method" required>
+                    <option value="http-get" selected>HTTP GET</option>
+                    <option value="http-post">HTTP POST</option>
+                    <option value="ssh">SSH</option>
+                    <option value="ftp">FTP</option>
+                    <option value="pop3">POP3</option>
+                    <option value="smtp">SMTP</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="wordlist" class="form-label">Pasword List</label>
+                <input type="file" class="form-control" id="pwordlist" name="wordlist" required>
+            </div>
+            <div class="mb-3">
+                <label for="wordlist" class="form-label">Username List</label>
+                <input type="file" class="form-control" id="uwordlist" name="wordlist" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="threads" class="form-label">Number of Threads</label>
+                <input type="number" class="form-control" id="threads" name="threads" value="4" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" style="background-color:#3cd541; border:none;">
+                Start Attack
+            </button>
+        </form>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Handle form submission for Hydra
+        document.getElementById("hydraForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const result = document.getElementById("result");
+            const errorMessage = document.getElementById("errorMessage");
+            const passwordDisplay = document.getElementById("password");
+
+            // Show loading and hide any previous messages
+            result.classList.add('d-none');
+            errorMessage.classList.add('d-none');
+            
+            // Simulating Hydra cracking process
+            setTimeout(function() {
+                // Simulating a successful result (replace with actual backend logic)
+                const success = Math.random() > 0.5;  // Random success/fail simulation
+                if (success) {
+                    passwordDisplay.innerText = 'exampleCrackedPassword123';
+                    result.classList.remove('d-none');
+                } else {
+                    errorMessage.innerText = 'Hydra failed to crack the password. Please check your input.';
+                    errorMessage.classList.remove('d-none');
+                }
+            }, 3000);  // Simulate processing time
+        });
+    </script>
+</body>
+</html>

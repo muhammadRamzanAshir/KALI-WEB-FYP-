@@ -1,0 +1,4 @@
+# Dirsearch started Mon Oct 21 06:56:03 2024 as: /usr/lib/python3/dist-packages/dirsearch/dirsearch.py -u https://chatgpt.com/ -t 1 -e all
+
+403    24B   https://chatgpt.com/%3f/
+403    24B   https://chatgpt.com/%C0%AE%C0%AE%C0%AF
